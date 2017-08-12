@@ -24,6 +24,25 @@ This will create a simple project based on the 'lame' template that comes with t
 
 Follow the REPL instructions to create a custom template directory, and enter your local information in the `.local.txt` file.
 
+## USEFUL KEYS
+
+The :NAME key is required.  The other keys used in the default template are:
+
+`SYSTEM` - the name of the asdf system; defaults to name;
+`PACKAGE` - the name of the package; defaults to name;
+`AUTHOR` - set in .local.txt
+`LICENCE` - set in .local.txt
+
+Feel free to add any keys you deem necessary (and change .local.txt to initialize them to useful values).
+
+## NOTES
+
+### Recursive substitution
+
+The key-name substitution is done repeatedly until no keys are left.  It is possible to expand keys to other keys, but be careful to avoid circularity as it will lock up the system.
+
+### WORK IN PROGRESS
+
 
 
 

@@ -1,7 +1,7 @@
 ;;
 ;;
 (asdf:defsystem #:trivial-project
-  :description "An extremely simple project skeleton generator"
+  :description "A simple project skeleton generator with key-value substitution"
   :author "StackSmith <fpgasm@apple2.x10.mx>"
   :license "BSD Simplified (2-clause)"
   :serial t
