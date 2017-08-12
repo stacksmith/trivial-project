@@ -1,0 +1,2 @@
+(:AUTHOR "you <you at your email>"
+	 :LICENSE "your-preferred-license" )
