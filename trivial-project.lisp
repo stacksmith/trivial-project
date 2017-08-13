@@ -19,8 +19,11 @@
 	 (let* ((maybe-key (string-upcase
 			    (subseq string (aref rs 0) (aref re 0))) )
 		(key (find-symbol maybe-key "KEYWORD")))
-	   (or (gethash key *params*)
-	       (error "process-string: key ~S is not provided" maybe-key)))))
+	   (multiple-value-bind (val exists) (gethash key *params*)
+	     (unless exists
+	       (error "process-string: key ~S is not provided" maybe-key))
+	     val
+	     ))))
     (if processed
 	(process-string result regex)
 	result)))
