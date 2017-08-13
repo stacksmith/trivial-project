@@ -57,15 +57,17 @@ The :NAME key is required.  The other keys used in the default template are:
 
  KEY | DEFAULT | COMMENT
  --- | ------- | -------
+`:NAME` | | !!! Required !!!
 `:SYSTEM` | value of `:NAME` | asdf system name
 `:PACKAGE` | value of `:NAME` | package name
 `:AUTHOR`  | | set in .local.tp
 `:LICENSE` | | set in .local.tp
+`:DESCRIPTION` | | !!!
+`:DEPENDS-ON` | | !!!
 `:DEFAULT-ACTION` | `:COPY` | what to do with unknown files
 `:REGEX-FILENAME` | `"TP_(.*?)_TP"` | filenames TP_XXX_TP have `:XXX` key
 `:REGEX-NORMAL`   | `"--(.*?)--"` | text --XXX-- interpreted as `:XXX` key
 `:EXTENSIONS`    | see below | list of extensions and actions
-`:MANIFEST-FILE` | ".manifest.tp" | optional file containing filenames and actions
 `:MANIFEST` | | optional highest-priority list of files and actions
 `:TEMPLATE-PATH` | "~/trivial-project-template/" | pathname of template
 `:OUTPUT-PATH` | your local project directory | directory that will contain new project

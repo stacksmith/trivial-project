@@ -74,7 +74,7 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 
 (defun files-initialize ()
   (clrhash *files*)
-  (when-let ((files (gethash :FILES *PARAMS*)))
+  (when-let ((files (gethash :MANIFEST *PARAMS*)))
     (loop for (key value) on files by #'cddr
        do (setf  (gethash key *files*) value))))
 
@@ -90,7 +90,9 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
    ;; Is the file extension specified?
    (gethash (pathname-type enoughpath) *extensions*)
    ;; default action
-   (getf *params* :DEFAULT-ACTION) ))
+   (gethash :DEFAULT-ACTION *params*)  ))
+
+
 
 
 
