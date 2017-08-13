@@ -53,9 +53,9 @@ The :NAME key is required.  The other keys used in the default template are:
 `PACKAGE` | `NAME` | package name
 `AUTHOR`  | | set in .local.tp
 `LICENSE` | | set in .local.tp
-`DEFAULT-ACTION` | :COPY | what to do with unknown files
-`REGEX-FILENAME` | "TP_(.*?)_TP" | filenames TP_XXX_TP have :XXX key
-`REGEX-NORMAL`   | "--(.*?)--" | text --XXX-- interpreted as :XXX key
+`DEFAULT-ACTION` | `:COPY` | what to do with unknown files
+`REGEX-FILENAME` | `"TP_(.*?)_TP"` | filenames TP_XXX_TP have `:XXX` key
+`REGEX-NORMAL`   | `"--(.*?)--"` | text --XXX-- interpreted as `:XXX` key
 `EXTNENSIONS`    | see below | list of extensions and actions
 `MANIFEST-FILE` | ".manifest.tp" | optional file containing filenames and actions
 `MANIFEST` | | optional highest-priority list of files and actions
