@@ -2,7 +2,7 @@
 
 A simple tool for creating new 'projects' populated with files.
 
-Almost every aspect of the project generation is configurable, including key-value substitution of text in files, filename renaming, specification of manifests of file actions, etc.
+Almost every aspect of the project generation is configurable, including key-value substitution of text in files, filename renaming, specification of manifests of file actions, and even the syntax of the substitution engine.  Multipass substitution creates many opportunities for generating complex projects with precision.
 
 ## DEPENDENCIES
 
@@ -22,7 +22,7 @@ Clone the repo at https://github.com/stacksmith/trivial-project.git to your loca
 ```
 This will create a simple project based on the 'lame' template that comes with this repo. 
 
-Follow the REPL instructions to create a custom template directory, and enter your local information in the `.local.tp` file.
+Follow the REPL instructions to create a custom template directory, and enter your local information in the `.local.tp` file.  This will allow you to customize the projects with your name and preferences.
 
 ## GENERAL USAGE
 
@@ -59,7 +59,7 @@ The :NAME key is required.  The other keys used in the default template are:
 
  KEY | DEFAULT | COMMENT
  --- | ------- | -------
-`:NAME` | | !!! Required !!!
+`:NAME` | | !!! Required; Name of directory of new project
 `:SYSTEM` | value of `:NAME` | asdf system name
 `:PACKAGE` | value of `:NAME` | package name
 `:AUTHOR`  | | set in .local.tp
@@ -79,9 +79,35 @@ Feel free to add any keys you deem necessary (and change .local.tp to initialize
 
 ## NOTES
 
-### Recursive substitution
+### Understanding substitution
 
 The key-name substitution is done repeatedly until no keys are left.  It is possible to expand keys to other keys, but be careful to avoid circularity as it will lock up the system.
+
+Keep in mind that substitution, especially from parameters in the `.local.tp` file, involves two separate processes.  
+
+1. The act of Lisp reading the `.local.tp` file using `(read)`.  At this point, values are read in without interpretation; string are strings, symbols are symbols, and lists are lists.
+
+2. Expansion: cl-ppcre expands _strings_; so any expansion-bound values _must_ be strings.  This process takes place _after_ all keywords have been parsed in; therefore any values may include any other keywords (keeping in mind the circularity problem).
+
+If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined as "--NAME--".  This will expand correctly into the value of :NAME at expansion time.  This process will involve two expansions: `--SYSTEM--` into `--NAME--`, followed by `--NAME--` into the actual project name as set by `:NAME` in the invocation.
+
+`:DEFAULT-ACTION` however is define as :COPY.  `:DEFAULT-ACTION` is never expanded - it is an internal symbol only, used to configure the expansion engine.
+
+### Reserved Symbols
+
+`:DEFAULT-ACTION` resolves to a symbol and is not expnadable. `:TEMPATE-PATH`, `:OUTPUT-PATH` are used by the system and are not useful (there are better ways to portably get the project path for instance).
+
+Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to internally map file types and names to actions.  Therefore symbols --EXTENSIONS-- and --MANIFEST-- should never be used inside text (or at least I cannot think of why you would want to introspect on TRIVIAL-PACKAGE itself)
+
+### Local configuration file and security
+
+`TRIVIAL-PACKAGE` _reads_ the `.local.tp` configuration file, which presents some security risks.  In practice, the risk is low; by using any system that generates Lisp files you are indicating some trust in it.  The configuration file is placed by you into your local home directory which is subject to your security settings.  Finally, this library generates stubs of your project, and chances are that you _will_ look at the files it generates before compiling and running the generated project sight unseen.
+
+But you are warned; as with all security related details, you must be vigilant.
+
+### Bluesky projects
+
+There is no particular reason to limit yourself to using `TRIVIAL-PROJECT` for lisp projects, as long as you keep in mind the reserved symbols and circulatiry issues.
 
 ### WORK IN PROGRESS
 

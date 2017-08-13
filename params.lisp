@@ -18,6 +18,13 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 	  nil))))
 
 ;;==============================================================================
+;;
+;; initial-keys
+;;
+;; Set up initial keys starting with TEMPLATE-PATH and OUTPUT-PATH, which may
+;; involve some guesswork...  Then, populate with data from local initialization
+;; file.  Finally, use invocation keyword parameters to maybe override defaults.
+;;
 (defun initial-keys (params)
   (setf *params* (make-hash-table :test 'equal))
   ;; set :TEMPLATE-PATH and :OUTPUT-PATH
