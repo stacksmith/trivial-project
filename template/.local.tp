@@ -13,6 +13,6 @@
    "asd"  :PROCESS
    "md"   :PROCESS
    "txt"  :PROCESS)
-:TP-REGISTER-WITH_ASDF t
+:TP-REGISTER-WITH-ASDF t
 )
 
