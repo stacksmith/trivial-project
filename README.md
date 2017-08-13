@@ -73,6 +73,7 @@ The :NAME key is required.  The other keys used in the default template are:
 `:MANIFEST` | | optional highest-priority list of files and actions
 `:TEMPLATE-PATH` | "~/trivial-project-template/" | pathname of template
 `:OUTPUT-PATH` | your local project directory | directory that will contain new project
+`:TP-CONFIG-FILENAME` | ".local.tp" | Configuration filename 
 
 
 Feel free to add any keys you deem necessary (and change .local.tp to initialize them to useful values).

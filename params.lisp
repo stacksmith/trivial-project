@@ -42,17 +42,18 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 	     (or (getf params :OUTPUT-PATH)
 		 (first quicklisp:*local-project-directories*)))))))
     (setf (gethash :TEMPLATE-PATH *params*) template-path
-	  (gethash :OUTPUT-PATH   *params*) output-path
-	  (gethash :SYSTEM *params*) name
-	  (gethash :PACKAGE *params*) name)
+	  (gethash :OUTPUT-PATH   *params*) output-path)
+    
     ;;--------------------------------------------------------------
     ;; attempt to read user's local files.
-    (when-let
-	((local
-	  (with-open-file (config (merge-pathnames ".local.tp" template-path))
-	    (read config))))
-      (loop for (key value) on local by #'cddr
-	 do (setf (gethash key *params*) value)))
+    (let ((tp-config-filename (or (getf params :TP-CONFIG-FILENAME)
+				  ".local.tp")))
+      (when-let
+	  ((local
+	    (with-open-file (config (merge-pathnames tp-config-filename template-path))
+	      (read config))))
+	(loop for (key value) on local by #'cddr
+	   do (setf (gethash key *params*) value))))
     ;;--------------------------------------------------------------
     ;; Populate with invocation parameters, overriding defaults...
     (loop for (key value) on params by #'cddr
@@ -79,6 +80,7 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 
 (defparameter *files* (make-hash-table :test 'equal))
 
+;; For MANIFEST declared file database:
 (defun files-initialize ()
   (clrhash *files*)
   (when-let ((files (gethash :MANIFEST *PARAMS*)))
