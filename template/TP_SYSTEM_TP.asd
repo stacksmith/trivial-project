@@ -1,11 +1,11 @@
 ;;
 ;;
 (asdf:defsystem #:--SYSTEM--
-  :description ""
+  :description --DESCRIPTION--
   :author --AUTHOR--
   :license --LICENSE--
   :serial t
-  :depends-on ()
+  :depends-on --DEPENDS-ON--
   :components ((:file "package")
 	       (:file "--SYSTEM--")))
 

@@ -71,7 +71,12 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 	  (getf params :PACKAGE) name
 	  (getf params :DEFAULT-ACTION) :COPY
 	  (getf params :REGEX-FILENAME) "TP_(.*?)_TP"
-	  (getf params :REGEX-NORMAL) "--(.*?)--"))
+	  (getf params :REGEX-NORMAL) "--(.*?)--"
+	  (getf params :DESCRIPTION) "set me!"
+	  (getf params :AUTHOR) "set me!"
+	  (getf params :LICENSE) "set me!"
+	  (getf params :DEPENDS-ON) "" )
+    )
   params)
 
 ;;==============================================================================
