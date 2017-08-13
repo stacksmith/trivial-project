@@ -30,6 +30,8 @@ After setting your name/email address and preferred license in .local.tp file, y
 
 Fine tune your template to fit your needs.  Feel free to create different templates for different types of projects; specify the one you need with `:TEMPLATE-PATH` when creating projects.  
 
+Create your own key names (just insert --KEYNAME-- in the text).  Of course, you must either pass the value by hand in `(make-project :NAME xxx :KEYNAME val...)`, or set a useful default in the .local.tp file (or both!).  Same goes for file renaming, with `TP_KEYNAME_TP` syntax in the filename.  If you don't like the --xx-- syntax, change it with `:REGEX-NORMAL`...
+
 Almost every aspect of project generation is configurable.  The rest of this document describes the aspects of configuration.
 
 ## KEY-VALUE SUBSTITUTION
