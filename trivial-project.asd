@@ -7,6 +7,6 @@
   :serial t
   :depends-on (#:cl-ppcre #:alexandria)
   :components ((:file "package")
-	       (:file "actions")
+	       (:file "params")
 	       (:file "trivial-project")))
 

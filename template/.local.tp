@@ -1,4 +1,14 @@
 (
 :AUTHOR "you <you at your email>"
 :LICENSE "your-preferred-license"
+:DEFAULT-ACTION :COPY
+:REGEX-FILENAME "TP_(.*?)_TP"
+:REGEX-NORMAL  "--(.*?)--"
+:DESCRIPTION  "set me!"
+:DEPENDS-ON  "" 
+:EXTENSIONS
+  ("lisp" :PROCESS
+   "asd"  :PROCESS
+   "md"   :PROCESS
+   "txt"  :PROCESS)
 )

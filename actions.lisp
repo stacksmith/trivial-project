@@ -10,29 +10,26 @@
 (defparameter *extensions* (make-hash-table :test 'equal))
 
 ;;----------------------------------------------------------------------------
-;; Initialize *extensions* from the key :EXTENSIONS plist, overriding
-;; the initial disposition if requested.  DO NOT USE :EXTENSIONS key
-;; for any other purpose then initializing this; ise *extensions*!
-(defun extensions-initialize (params)
-  (setf (gethash "lisp" *extensions*) :process
-	(gethash "asd" *extensions*) :process
-	(gethash "md" *extensions*) :process
-	(gethash "txt" *extensions*) :process
-	(gethash "tp" *extensions*) :ignore)
-  
-  (when-let ((extensions (getf params :extensions)))
+;;
+(defun extensions-initialize ()
+  (clrhash *extensions*)
+  (when-let ((extensions (gethash :EXTENSIONS *PARAMS*)))
     (loop for (key value) on extensions by #'cddr
        do (setf  (gethash key *extensions*) value))))
 
 (defparameter *files* (make-hash-table :test 'equal))
 
 (defun files-initialize ()
-  (when-let ((files (getf *params* :MANIFEST)))
+  (clrhash *files*)
+  (when-let ((files (gethash :FILES *PARAMS*)))
     (loop for (key value) on files by #'cddr
-	 do (setf (gethash key *files*) value))))
+       do (setf  (gethash key *files*) value))))
+
 
 ;;----------------------------------------------------------------------------
+;;
 ;; Figure out action for a file by its extension
+;;
 (defun filename-action (enoughpath)
   (or
    ;; Is the file specified explicitly?
@@ -41,3 +38,6 @@
    (gethash (pathname-type enoughpath) *extensions*)
    ;; default action
    (getf *params* :DEFAULT-ACTION) ))
+
+
+
