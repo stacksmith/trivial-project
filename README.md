@@ -26,7 +26,7 @@ Follow the REPL instructions to create a custom template directory, and enter yo
 
 ## KEY-VALUE SUBSTITUTION
 
-In addition to copying files from the template directory, TRIVIAL-PROJECT will substitute specially-tagged keys with values inside text files -- and even filenames.
+In addition to copying files from the template directory, TRIVIAL-PROJECT will replace specially marked text and rename specially named files.
 
 The syntax is simple: keys and values are obtained directly from the invocation of `(make-project :name "test" :SOMEKEY somevalue ...)`; any occurrences of the string --SOMEKEY--<sup>[1](#myfootnote1)</sup> inside the files will be replaced with the value.
 
