@@ -11,6 +11,7 @@
 ;; returning the final string, or error.
 ;;
 (defun process-string (string  &optional (regex (gethash :REGEX-NORMAL *params*)))
+  ;;(format t "~%1)~S" string)
   (multiple-value-bind (result processed)
       (cl-ppcre:regex-replace-all
        regex  string
@@ -24,8 +25,10 @@
 	       (error "process-string: key ~S is not provided" maybe-key))
 	     val
 	     ))))
+    ;;(format t "~%2) ~A ~S" result processed)
     (if processed
-	(process-string result regex)
+	;; multiple expansion is always doen with normal regex!
+	(process-string result (gethash :REGEX-NORMAL *params*))
 	result)))
 
 
@@ -44,16 +47,18 @@
   (let ((filename-regex (gethash :REGEX-FILENAME *params*))
 	(src-path (gethash :TEMPLATE-PATH *params*))
 	(dest-path (gethash :OUTPUT-PATH *params*)))
+    
     (loop for fullpath in (uiop:directory-files src-path)
-       for enoughpath = (process-string
-			 (namestring (uiop:enough-pathname fullpath src-path))
-			 filename-regex )
+       for subpath = (namestring (uiop:enough-pathname fullpath src-path))
+       for enoughpath = (process-string subpath filename-regex )
        do
-	 (case (filename-action enoughpath);; todo: subdirectories
+	(print subpath)
+	 (case (filename-action subpath);; todo: subdirectories
 	   (:copy (copy-file fullpath (merge-pathnames enoughpath dest-path )))
 	   (:process (process-file
 		      fullpath (merge-pathnames enoughpath dest-path)))
-	   (t ())))))
+	   (t ())))
+    ))
 
 ;;=========================================================================
 ;; 
