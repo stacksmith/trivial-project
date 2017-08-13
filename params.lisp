@@ -34,6 +34,7 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 	   (or (getf params :TEMPLATE-PATH)
 	       (local-template)
 	       (asdf:system-relative-pathname 'trivial-project "template"))))
+    
 	 (output-path
 	  (ensure-directories-exist
 	   (uiop:ensure-directory-pathname

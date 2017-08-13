@@ -52,6 +52,7 @@ Possible actions for each file are `:COPY` `:IGNORE` `:PROCESS`.  Each file in t
 * If the extension is specified in in `:EXTENSIONS`, corresponding action is taken; otherwise
 * action specified in `:DEFAULT-ACTION` (defaults to `:COPY`) is taken.
 
+Note: the action is determined prior to file renaming.  Use common sense in renaming files (such as not changing the extension).
 
 ## USEFUL KEYS
 
@@ -74,6 +75,7 @@ The :NAME key is required.  The other keys used in the default template are:
 `:TEMPLATE-PATH` | "~/trivial-project-template/" | pathname of template
 `:OUTPUT-PATH` | your local project directory | directory that will contain new project
 `:TP-CONFIG-FILENAME` | ".local.tp" | Configuration filename 
+`:TP-REGISTER-WITH-ASDF` | ".local.tp" | when T register project path with asdf:*central-registry*
 
 
 Feel free to add any keys you deem necessary (and change .local.tp to initialize them to useful values).
@@ -99,6 +101,18 @@ If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined
 `:DEFAULT-ACTION` resolves to a symbol and is not expnadable. `:TEMPATE-PATH`, `:OUTPUT-PATH` are used by the system and are not useful (there are better ways to portably get the project path for instance).
 
 Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to internally map file types and names to actions.  Therefore symbols --EXTENSIONS-- and --MANIFEST-- should never be used inside text (or at least I cannot think of why you would want to introspect on TRIVIAL-PROJECT itself)
+
+### File Renaming
+
+As mentioned before, the (default but changeable) syntax for keys in filenames to be renamed is TP_xxx_TP, in order to work with the file systems (dashes in filenames are problematic).  In case of a multipass renaming, keep in mind that intermediate names must be in the 'normal' syntax.  This is not an issue for filenames, since the final result should be a valid filename and intermediate results are not relevant.
+
+As an example, the stock template has a file named `TP_SYSTEM_TP.asd`.  The name will expand to `--NAME--.asd` and finally to the name of the value of `:NAME` -- the name of the project, unless `:SYSTEM` has been explicitly set. 
+
+### Multipass Renaming
+
+Each string, be it a filename or the contents of a file, is subject to multipass renaming.  It will continue to be processed until no keys are found in the file.  
+
+Note: only the first pass in filenames uses the filename syntax; from second pass on, the standard syntax is used.  This merges the keywords for both filenames and normal string expansion
 
 ### Local configuration file and security
 
