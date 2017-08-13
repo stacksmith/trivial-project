@@ -24,6 +24,14 @@ This will create a simple project based on the 'lame' template that comes with t
 
 Follow the REPL instructions to create a custom template directory, and enter your local information in the `.local.tp` file.
 
+## GENERAL USAGE
+
+After setting your name/email address and preferred license in .local.tp file, you can just `(tp:make-project :NAME ...)`
+
+Fine tune your template to fit your needs.  Feel free to create different templates for different types of projects; specify the one you need with `:TEMPLATE-PATH` when creating projects.  
+
+Almost every aspect of project generation is configurable.  The rest of this document describes the aspects of configuration.
+
 ## KEY-VALUE SUBSTITUTION
 
 In addition to copying files from the template directory, TRIVIAL-PROJECT will replace specially marked text and rename specially named files.
@@ -59,6 +67,9 @@ The :NAME key is required.  The other keys used in the default template are:
 `:EXTENSIONS`    | see below | list of extensions and actions
 `:MANIFEST-FILE` | ".manifest.tp" | optional file containing filenames and actions
 `:MANIFEST` | | optional highest-priority list of files and actions
+`:TEMPLATE-PATH` | "~/trivial-project-template/" | pathname of template
+`:OUTPUT-PATH` | your local project directory | directory that will contain new project
+
 
 Feel free to add any keys you deem necessary (and change .local.tp to initialize them to useful values).
 
