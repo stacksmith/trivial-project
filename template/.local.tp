@@ -3,6 +3,7 @@
 :PACKAGE "--NAME--"
 :AUTHOR "you <you at your email>"
 :LICENSE "your-preferred-license"
+:NICKNAMES ""
 :DEFAULT-ACTION :COPY
 :REGEX-FILENAME "TP_(.*?)_TP"
 :REGEX-NORMAL  "--(.*?)--"

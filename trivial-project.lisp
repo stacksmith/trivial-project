@@ -52,12 +52,13 @@
        for subpath = (namestring (uiop:enough-pathname fullpath src-path))
        for enoughpath = (process-string subpath filename-regex )
        do
-	(print subpath)
+	 ;;(print subpath)
 	 (case (filename-action subpath);; todo: subdirectories
 	   (:copy (copy-file fullpath (merge-pathnames enoughpath dest-path )))
 	   (:process (process-file
 		      fullpath (merge-pathnames enoughpath dest-path)))
 	   (t ())))
+    ;; TODO: pushnew seems to not recognize duplicates
     (if (gethash :TP-REGISTER-WITH-ASDF *params*)
 	(pushnew (truename dest-path) asdf:*central-registry*))
     ))
