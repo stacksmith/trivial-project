@@ -58,6 +58,7 @@
 	   (:process (process-file
 		      fullpath (merge-pathnames enoughpath dest-path)))
 	   (t ())))
+    (pushnew (truename dest-path) asdf:*central-registry*)
     ))
 
 ;;=========================================================================
