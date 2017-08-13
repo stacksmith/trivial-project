@@ -98,11 +98,11 @@ If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined
 
 `:DEFAULT-ACTION` resolves to a symbol and is not expnadable. `:TEMPATE-PATH`, `:OUTPUT-PATH` are used by the system and are not useful (there are better ways to portably get the project path for instance).
 
-Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to internally map file types and names to actions.  Therefore symbols --EXTENSIONS-- and --MANIFEST-- should never be used inside text (or at least I cannot think of why you would want to introspect on TRIVIAL-PACKAGE itself)
+Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to internally map file types and names to actions.  Therefore symbols --EXTENSIONS-- and --MANIFEST-- should never be used inside text (or at least I cannot think of why you would want to introspect on TRIVIAL-PROJECT itself)
 
 ### Local configuration file and security
 
-`TRIVIAL-PACKAGE` _reads_ the `.local.tp` configuration file, which presents some security risks.  In practice, the risk is low; by using any system that generates Lisp files you are indicating some trust in it.  The configuration file is placed by you into your local home directory which is subject to your security settings.  Finally, this library generates stubs of your project, and chances are that you _will_ look at the files it generates before compiling and running the generated project sight unseen.
+`TRIVIAL-PROJECT` _reads_ the `.local.tp` configuration file, which presents some security risks.  In practice, the risk is low; by using any system that generates Lisp files you are indicating some trust in it.  The configuration file is placed by you into your local home directory which is subject to your security settings.  Finally, this library generates stubs of your project, and chances are that you _will_ look at the files it generates before compiling and running the generated project sight unseen.
 
 But you are warned; as with all security related details, you must be vigilant.
 
