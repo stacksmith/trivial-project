@@ -1,7 +1,7 @@
 (
 :SYSTEM "--NAME--"
 :PACKAGE "--NAME--"
-:AUTHOR "you <you at your email>"
+:AUTHOR "set your name/email here or in ~/.trivial-project-global.tp"
 :LICENSE "your-preferred-license"
 :NICKNAMES ""
 :DEFAULT-ACTION :COPY

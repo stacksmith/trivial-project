@@ -61,6 +61,14 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
      (or (getf params :TP-LOCAL-CONFIG-FILENAME)
 	 ".local.tp") :in  template-path)
     ;;--------------------------------------------------------------
+    ;; attempt to read user's global parameters from user's homedir;
+    ;; these override the local parameters.  Mostly, to set the
+    ;; AUTHOR field, and any 'global' fields, while allowing the
+    ;; local configuration to provide defaults initially...
+    (set-params-from-file
+     ".trivial-project-global.tp" :in  (user-homedir-pathname))
+    
+    ;;--------------------------------------------------------------
     ;; Populate with invocation parameters, overriding defaults...
     (set-params-from-list params)
 #||    (let ((tp-config-filename (or (getf params :TP-GLOBAL-CONFIG-FILENAME)
