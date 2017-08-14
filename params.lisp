@@ -18,6 +18,16 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 	  nil))))
 
 ;;==============================================================================
+(defun set-params-from-list (list)
+  "set (overwriting) *params* from plist-like list"
+  (loop for (key value) on list by #'cddr
+     do (setf (gethash key *params*) value)))
+;;==============================================================================
+(defun set-params-from-file (path &key (in ""))
+  (set-params-from-list
+   (with-open-file (config (merge-pathnames path in))
+     (read config))))
+;;==============================================================================
 ;;
 ;; initial-keys
 ;;
@@ -44,21 +54,35 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 		 (first quicklisp:*local-project-directories*)))))))
     (setf (gethash :TEMPLATE-PATH *params*) template-path
 	  (gethash :OUTPUT-PATH   *params*) output-path)
-    
+
     ;;--------------------------------------------------------------
-    ;; attempt to read user's local files.
-    (let ((tp-config-filename (or (getf params :TP-CONFIG-FILENAME)
-				  ".local.tp")))
+    ;; attempt to read user's template parameters
+    (set-params-from-file
+     (or (getf params :TP-LOCAL-CONFIG-FILENAME)
+	 ".local.tp") :in  template-path)
+    ;;--------------------------------------------------------------
+    ;; Populate with invocation parameters, overriding defaults...
+    (set-params-from-list params)
+#||    (let ((tp-config-filename (or (getf params :TP-GLOBAL-CONFIG-FILENAME)
+				  ".tp-config.txt")))
+      (when-let
+	  ((list
+	    (with-open-file (config (merge-pathnames tp-config-filename (user-homedir-pathname) ))
+	      (read config))))
+	(set-params-from-list list)))
+
+    ;;--------------------------------------------------------------
+    ;; attempt to read template parameters
+    (let ((tp-config-filename (or (getf params :TP-LOCAL-CONFIG-FILENAME)
+				  (gethash :TP-LOCAL-CONFIG-FILENAME *params*)
+				  ".tp-config.txt")))
       (when-let
 	  ((local
 	    (with-open-file (config (merge-pathnames tp-config-filename template-path))
 	      (read config))))
-	(loop for (key value) on local by #'cddr
-	   do (setf (gethash key *params*) value))))
-    ;;--------------------------------------------------------------
-    ;; Populate with invocation parameters, overriding defaults...
-    (loop for (key value) on params by #'cddr
-       do (setf (gethash key *params*) value))))
+	(set-params-from-list local)))
+||#
+))
 
 
 ;;
