@@ -90,13 +90,13 @@ Feel free to add any keys you deem necessary (and change .local.tp to initialize
 
 The key-name substitution is done repeatedly until no keys are left.  It is possible to expand keys to other keys, but be careful to avoid circularity as it will lock up the system.
 
-Keep in mind that substitution, especially from parameters in the `.local.tp` file, involves two separate processes.  
+Keep in mind that substitution, especially from parameters in the `.local.tp` file, involves:
 
 1. The act of Lisp reading the `.local.tp` file using `(read)`.  At this point, values are read in without interpretation; string are strings, symbols are symbols, and lists are lists.
 
 2. Expansion: cl-ppcre expands _strings_; so any expansion-bound values _must_ be strings.  This process takes place _after_ all keywords have been parsed in; therefore any values may include any other keywords (keeping in mind the circularity problem).
 
-If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined as "--NAME--".  This will expand correctly into the value of :NAME at expansion time.  This process will involve two expansions: `--SYSTEM--` into `--NAME--`, followed by `--NAME--` into the actual project name as set by `:NAME` in the invocation.
+If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined as "--NAME--".  This will expand correctly into the value of `:NAME`.  There will be two expansions: `--SYSTEM--` into `--NAME--`, followed by `--NAME--` into the value of `:NAME` in the invocation.
 
 `:DEFAULT-ACTION` however is define as :COPY.  `:DEFAULT-ACTION` is never expanded - it is an internal symbol only, used to configure the expansion engine.
 
@@ -108,9 +108,9 @@ Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to inte
 
 ### File Renaming
 
-As mentioned before, the (default but changeable) syntax for keys in filenames to be renamed is TP_xxx_TP, in order to work with the file systems (dashes in filenames are problematic).  In case of a multipass renaming, keep in mind that intermediate names must be in the 'normal' syntax.  This is not an issue for filenames, since the final result should be a valid filename and intermediate results are not relevant.
+As mentioned before, the (default but changeable) syntax for keys in filenames to be renamed is TP_xxx_TP, in order to work with the file systems (dashes in filenames are problematic).  In case of a multipass renaming, keep in mind that intermediate names must be in the 'normal' syntax. The final result should be a valid filename and intermediate results are not relevant.
 
-As an example, the stock template has a file named `TP_SYSTEM_TP.asd`.  The name will expand to `--NAME--.asd` and finally to the name of the value of `:NAME` -- the name of the project, unless `:SYSTEM` has been explicitly set. 
+As an example, the stock template has a file named `TP_SYSTEM_TP.asd`.  It will expand to `--NAME--.asd` and finally to the value of `:NAME` with extension .asd, unless `:SYSTEM` has been explicitly set. 
 
 ### Multipass Renaming
 
