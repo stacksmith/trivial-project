@@ -53,7 +53,7 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 	     (or (getf params :OUTPUT-PATH)
 		 (first quicklisp:*local-project-directories*)))))))
     (setf (gethash :TEMPLATE-PATH *params*) template-path
-	  (gethash :OUTPUT-PATH   *params*) output-path)
+	  (gethash :OUTPUT-PATH   *params*) output-path) 
 
     ;;--------------------------------------------------------------
     ;; attempt to read user's template parameters
