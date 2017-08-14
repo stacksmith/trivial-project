@@ -46,6 +46,8 @@ Filenames are likewise subject to substitution.  For portability, the keys are t
 
 ## FILE PROCESSING
 
+All files in the template directory and its subdirectories are processed.
+
 Possible actions for each file are `:COPY` `:IGNORE` `:PROCESS`.  Each file in the template directory is processed as follows:
 
 * If it is listed in `:MANIFEST` or file specified by `:MANIFEST-FILE`, the corresponding action is taken; otherwise
@@ -53,6 +55,8 @@ Possible actions for each file are `:COPY` `:IGNORE` `:PROCESS`.  Each file in t
 * action specified in `:DEFAULT-ACTION` (defaults to `:COPY`) is taken.
 
 Note: the action is determined prior to file renaming.  Use common sense in renaming files (such as not changing the extension).
+
+The manifest is a list of files and file actions.  Files are strings containing the subpath from the template directory.  Only files (not directories) must be listed; directories are created automatically.
 
 ## USEFUL KEYS
 
