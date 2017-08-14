@@ -83,8 +83,8 @@
 	   (t ())))
     ;; TODO: pushnew seems to not recognize duplicates
     (if (gethash :TP-REGISTER-WITH-ASDF *params*)
-	(pushnew (truename dest-path) asdf:*central-registry*)))
-  t)
+	(pushnew (truename dest-path) asdf:*central-registry*))
+    dest-path))
 
 ;;=========================================================================
 ;; 
@@ -96,8 +96,8 @@
   (initial-keys params)
   (extensions-initialize)
   (files-initialize)
-
-  (process-files))
+  (process-files)
+  )
 
 
 
