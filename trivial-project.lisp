@@ -43,25 +43,48 @@
 	(write-sequence string out)))))
 
 
+(defun all-files-below (directory root)
+  "collect all filenames at or below root, relative to root, as strings"
+  ;; this primitive recursively builds a tree of all files
+  ;; below directory
+  (labels
+      ((filetree (directory)
+	 (append
+	  (loop for subdirectory in (uiop:subdirectories directory)
+	     collect (filetree subdirectory))
+	  (loop for file in (uiop:directory-files directory)
+	     collect file))))
+    ;; now, remove the prefix leaving just the path below root...
+    (mapcar (lambda (path)
+	      (namestring (uiop:enough-pathname path root)))
+	    (alexandria:flatten (filetree directory)))))
+
+
 (defun process-files ()
   (let ((filename-regex (gethash :REGEX-FILENAME *params*))
 	(src-path (gethash :TEMPLATE-PATH *params*))
 	(dest-path (gethash :OUTPUT-PATH *params*)))
-    
-    (loop for fullpath in (uiop:directory-files src-path)
-       for subpath = (namestring (uiop:enough-pathname fullpath src-path))
-       for enoughpath = (process-string subpath filename-regex )
+
+    (loop for subpath in (all-files-below src-path src-path)
+       for new-subpath = (process-string subpath filename-regex )
        do
-	 ;;(print subpath)
+;;	 (print enoughpath)
 	 (case (filename-action subpath);; todo: subdirectories
-	   (:copy (copy-file fullpath (merge-pathnames enoughpath dest-path )))
-	   (:process (process-file
-		      fullpath (merge-pathnames enoughpath dest-path)))
+	   (:copy
+	    (copy-file
+	     (merge-pathnames subpath src-path)
+	     (uiop::ensure-directories-exist
+	      (merge-pathnames new-subpath dest-path ))))
+	   (:process
+	    (process-file
+	     (merge-pathnames subpath src-path)
+	     (uiop::ensure-directories-exist
+	      (merge-pathnames new-subpath dest-path))))
 	   (t ())))
     ;; TODO: pushnew seems to not recognize duplicates
     (if (gethash :TP-REGISTER-WITH-ASDF *params*)
-	(pushnew (truename dest-path) asdf:*central-registry*))
-    ))
+	(pushnew (truename dest-path) asdf:*central-registry*)))
+  t)
 
 ;;=========================================================================
 ;; 
@@ -75,3 +98,6 @@
   (files-initialize)
 
   (process-files))
+
+
+
