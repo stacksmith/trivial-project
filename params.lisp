@@ -1,10 +1,20 @@
 (in-package #:tp)
 
-(defparameter *params* nil)
 
+(defparameter *params* nil)
+;;------------------------------------------------------------------------------
+;; Output path must be either explictly set with :OUTPUT-PATH keyword,
+;; or set from quicklisp
+(defparameter *output-path* nil)
+#+:quicklisp
+(eval-when (:compile-toplevel :execute :load-toplevel)
+  (setf *output-path* (first quicklisp:*local-project-directories*)))
+;;------------------------------------------------------------------------------
+;; get the project template; if original, warn and advise user
 (defun local-template ()
   (let ((local (uiop:ensure-directory-pathname
-		(merge-pathnames "trivial-project-template" (user-homedir-pathname)))))
+		(merge-pathnames "trivial-project-template"
+				 (user-homedir-pathname)))))
     (if (probe-file local)
 	local
 	(progn
@@ -51,7 +61,7 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 	    (merge-pathnames
 	     name
 	     (or (getf params :OUTPUT-PATH)
-		 (first quicklisp:*local-project-directories*)))))))
+		 *output-path*))))))
     (setf (gethash :TEMPLATE-PATH *params*) template-path
 	  (gethash :OUTPUT-PATH   *params*) output-path) 
 
@@ -71,25 +81,6 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
     ;;--------------------------------------------------------------
     ;; Populate with invocation parameters, overriding defaults...
     (set-params-from-list params)
-#||    (let ((tp-config-filename (or (getf params :TP-GLOBAL-CONFIG-FILENAME)
-				  ".tp-config.txt")))
-      (when-let
-	  ((list
-	    (with-open-file (config (merge-pathnames tp-config-filename (user-homedir-pathname) ))
-	      (read config))))
-	(set-params-from-list list)))
-
-    ;;--------------------------------------------------------------
-    ;; attempt to read template parameters
-    (let ((tp-config-filename (or (getf params :TP-LOCAL-CONFIG-FILENAME)
-				  (gethash :TP-LOCAL-CONFIG-FILENAME *params*)
-				  ".tp-config.txt")))
-      (when-let
-	  ((local
-	    (with-open-file (config (merge-pathnames tp-config-filename template-path))
-	      (read config))))
-	(set-params-from-list local)))
-||#
 ))
 
 
