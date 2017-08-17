@@ -34,7 +34,7 @@
 
 
 (defun process-file (srcpath destpath)
-;;  (format t "~%processing ~A ~A" srcpath destpath)
+  (format t "~%processing ~A ~A" srcpath destpath)
   (with-open-file (in srcpath)
     ;; read entire file into a string
     (let ((string (make-string (file-length in))))
@@ -65,7 +65,7 @@
   (let ((filename-regex (gethash :REGEX-FILENAME *params*))
 	(src-path (uiop:truename* (gethash :TEMPLATE-PATH *params*)))
 	(dest-path (uiop:truename* (gethash :OUTPUT-PATH *params*))))
-    (when (equal (src-path dest-path))
+    (when (equal src-path dest-path)
       (error "both source and destination paths are ~A" src-path))
     (loop for subpath in (all-files-below src-path src-path)
        for new-subpath = (process-string subpath filename-regex )
