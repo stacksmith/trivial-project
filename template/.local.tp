@@ -1,12 +1,12 @@
 (
-:SYSTEM "--NAME--"
-:PACKAGE "--NAME--"
+:SYSTEM "~~NAME~~"
+:PACKAGE "~~NAME~~"
 :AUTHOR "set your name/email here or in ~/.trivial-project-global.tp"
 :LICENSE "your-preferred-license"
 :NICKNAMES ""
 :DEFAULT-ACTION :COPY
 :REGEX-FILENAME "TP_(.*?)_TP"
-:REGEX-NORMAL  "--(.*?)--"
+:REGEX-NORMAL  "~~(.*?)~~"
 :DESCRIPTION  "set me!"
 :DEPENDS-ON  "" 
 :EXTENSIONS

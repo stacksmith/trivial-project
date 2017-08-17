@@ -1,10 +1,9 @@
 ;;;; package.lisp
 
-(defpackage #:--PACKAGE--
-  (:nicknames --NICKNAMES--)
+(defpackage #:~~PACKAGE~~
+  (:nicknames ~~NICKNAMES~~)
   (:use #:cl)
   (:export)
   )
-
 
 

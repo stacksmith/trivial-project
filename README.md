@@ -30,7 +30,7 @@ After setting your name/email address and preferred license in .local.tp file, y
 
 Fine tune your template to fit your needs.  Feel free to create different templates for different types of projects; specify the one you need with `:TEMPLATE-PATH` when creating projects.  
 
-Create your own key names (just insert --KEYNAME-- in the text).  Of course, you must either pass the value by hand in `(make-project :NAME xxx :KEYNAME val...)`, or set a useful default in the .local.tp file (or both!).  Same goes for file renaming, with `TP_KEYNAME_TP` syntax in the filename.  If you don't like the --xx-- syntax, change it with `:REGEX-NORMAL`...
+Create your own key names (just insert ~~KEYNAME~~ in the text).  Of course, you must either pass the value by hand in `(make-project :NAME xxx :KEYNAME val...)`, or set a useful default in the .local.tp file (or both!).  Same goes for file renaming, with `TP_KEYNAME_TP` syntax in the filename.  If you don't like the ~~xx~~ syntax, change it with `:REGEX-NORMAL`...
 
 Almost every aspect of project generation is configurable.  The rest of this document describes the aspects of configuration.
 
@@ -38,7 +38,7 @@ Almost every aspect of project generation is configurable.  The rest of this doc
 
 In addition to copying files from the template directory, TRIVIAL-PROJECT will replace specially marked text and rename specially named files.
 
-The syntax is simple: keys and values are obtained directly from the invocation of `(make-project :name "test" :SOMEKEY somevalue ...)`; any occurrences of the string `--SOMEKEY--` <sup>[1](#myfootnote1)</sup> inside the files will be replaced with the value.
+The syntax is simple: keys and values are obtained directly from the invocation of `(make-project :name "test" :SOMEKEY somevalue ...)`; any occurrences of the string `~~SOMEKEY~~` <sup>[1](#myfootnote1)</sup> inside the files will be replaced with the value.
 
 Filenames are likewise subject to substitution.  For portability, the keys are tagged `TP_SOMEKEY_TP`<sup>[1](#myfootnote1)</sup> in filenames; so the template file "TP_SYSTEM_TP.asd" will be named "test.asd" in the new project.
 
@@ -63,7 +63,7 @@ The manifest is a list of files and file actions.  Files are strings containing 
 The :NAME key is required.  The other keys used in the default template are:
 
  KEY | DEFAULT | COMMENT
- --- | ------- | -------
+ ~~- | ~~~~~~- | ~~~~~~-
 `:NAME` | | !!! Required; Name of directory of new project
 `:SYSTEM` | value of `:NAME` | asdf system name
 `:PACKAGE` | value of `:NAME` | package name
@@ -73,7 +73,7 @@ The :NAME key is required.  The other keys used in the default template are:
 `:DEPENDS-ON` | | !!!
 `:DEFAULT-ACTION` | `:COPY` | what to do with unknown files
 `:REGEX-FILENAME` | `"TP_(.*?)_TP"` | filenames TP_XXX_TP have `:XXX` key
-`:REGEX-NORMAL`   | `"--(.*?)--"` | text --XXX-- interpreted as `:XXX` key
+`:REGEX-NORMAL`   | `"~~(.*?)~~"` | text ~~XXX~~ interpreted as `:XXX` key
 `:EXTENSIONS`    | see below | list of extensions and actions
 `:MANIFEST` | | optional highest-priority list of files and actions
 `:TEMPLATE-PATH` | "~/trivial-project-template/" | pathname of template
@@ -96,7 +96,7 @@ Keep in mind that substitution, especially from parameters in the `.local.tp` fi
 
 2. Expansion: cl-ppcre expands _strings_; so any expansion-bound values _must_ be strings.  This process takes place _after_ all keywords have been parsed in; therefore any values may include any other keywords (keeping in mind the circularity problem).
 
-If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined as "--NAME--".  This will expand correctly into the value of `:NAME`.  There will be two expansions: `--SYSTEM--` into `--NAME--`, followed by `--NAME--` into the value of `:NAME` in the invocation.
+If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined as "~~NAME~~".  This will expand correctly into the value of `:NAME`.  There will be two expansions: `~~SYSTEM~~` into `~~NAME~~`, followed by `~~NAME~~` into the value of `:NAME` in the invocation.
 
 `:DEFAULT-ACTION` however is define as :COPY.  `:DEFAULT-ACTION` is never expanded - it is an internal symbol only, used to configure the expansion engine.
 
@@ -104,13 +104,13 @@ If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined
 
 `:DEFAULT-ACTION` resolves to a symbol and is not expnadable. `:TEMPATE-PATH`, `:OUTPUT-PATH` are used by the system and are not useful (there are better ways to portably get the project path for instance).
 
-Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to internally map file types and names to actions.  Therefore symbols --EXTENSIONS-- and --MANIFEST-- should never be used inside text (or at least I cannot think of why you would want to introspect on TRIVIAL-PROJECT itself)
+Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to internally map file types and names to actions.  Therefore symbols ~~EXTENSIONS~~ and ~~MANIFEST~~ should never be used inside text (or at least I cannot think of why you would want to introspect on TRIVIAL-PROJECT itself)
 
 ### File Renaming
 
 As mentioned before, the (default but changeable) syntax for keys in filenames to be renamed is TP_xxx_TP, in order to work with the file systems (dashes in filenames are problematic).  In case of a multipass renaming, keep in mind that intermediate names must be in the 'normal' syntax. The final result should be a valid filename and intermediate results are not relevant.
 
-As an example, the stock template has a file named `TP_SYSTEM_TP.asd`.  It will expand to `--NAME--.asd` and finally to the value of `:NAME` with extension .asd, unless `:SYSTEM` has been explicitly set. 
+As an example, the stock template has a file named `TP_SYSTEM_TP.asd`.  It will expand to `~~NAME~~.asd` and finally to the value of `:NAME` with extension .asd, unless `:SYSTEM` has been explicitly set. 
 
 ### Multipass Renaming
 
