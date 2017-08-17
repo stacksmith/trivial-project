@@ -119,7 +119,7 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 ;;
 (defun filename-action (enoughpath)
   (or
-   (and (char= #\. (char enoughpath 0))
+   (and (char= #\. (char (pathname-name enoughpath) 0))
 	:ignore)
    ;; Is the file specified explicitly?
    (gethash enoughpath *files*)
