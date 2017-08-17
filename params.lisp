@@ -49,6 +49,7 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
   (setf *params* (make-hash-table :test 'equal))
   ;; set :TEMPLATE-PATH and :OUTPUT-PATH
   (let* ((name (getf params :NAME)) ;required
+	 ;; We need template path to get local configuration...
 	 (template-path
 	  (uiop:ensure-directory-pathname
 	   (or (getf params :TEMPLATE-PATH)
@@ -62,7 +63,7 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 	     name
 	     (or (getf params :OUTPUT-PATH)
 		 *output-path*))))))
-    (setf (gethash :TEMPLATE-PATH *params*) template-path
+    (setf (gethash :TEMPLATE-PATH *params*) (uiop:truename* template-path)
 	  (gethash :OUTPUT-PATH   *params*) output-path) 
 
     ;;--------------------------------------------------------------

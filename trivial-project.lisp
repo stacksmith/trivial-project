@@ -34,6 +34,7 @@
 
 
 (defun process-file (srcpath destpath)
+;;  (format t "~%processing ~A ~A" srcpath destpath)
   (with-open-file (in srcpath)
     ;; read entire file into a string
     (let ((string (make-string (file-length in))))
@@ -62,13 +63,13 @@
 
 (defun process-files ()
   (let ((filename-regex (gethash :REGEX-FILENAME *params*))
-	(src-path (gethash :TEMPLATE-PATH *params*))
-	(dest-path (gethash :OUTPUT-PATH *params*)))
-
+	(src-path (uiop:truename* (gethash :TEMPLATE-PATH *params*)))
+	(dest-path (uiop:truename* (gethash :OUTPUT-PATH *params*))))
+   
     (loop for subpath in (all-files-below src-path src-path)
        for new-subpath = (process-string subpath filename-regex )
        do
-;;	 (print enoughpath)
+   
 	 (case (filename-action subpath);; todo: subdirectories
 	   (:copy
 	    (copy-file
