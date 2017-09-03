@@ -79,7 +79,7 @@ The :NAME key is required.  The other keys used in the default template are:
 `:TEMPLATE-PATH` | "~/trivial-project-template/" | pathname of template
 `:OUTPUT-PATH` | your local project directory | directory that will contain new project
 `:TP-LOCAL-CONFIG-FILENAME` | ".local.tp" | Configuration filename 
-`:TP-REGISTER-WITH-ASDF` | ".local.tp" | when T register project path with asdf:*central-registry*
+`:TP-REGISTER-WITH-ASDF` | T | when T register project path with asdf:*central-registry*
 
 
 Feel free to add any keys you deem necessary (and change .local.tp to initialize them to useful values).
