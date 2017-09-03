@@ -78,7 +78,7 @@ The :NAME key is required.  The other keys used in the default template are:
 `:MANIFEST` | | optional highest-priority list of files and actions
 `:TEMPLATE-PATH` | "~/trivial-project-template/" | pathname of template
 `:OUTPUT-PATH` | your local project directory | directory that will contain new project
-`:TP-CONFIG-FILENAME` | ".local.tp" | Configuration filename 
+`:TP-LOCAL-CONFIG-FILENAME` | ".local.tp" | Configuration filename 
 `:TP-REGISTER-WITH-ASDF` | ".local.tp" | when T register project path with asdf:*central-registry*
 
 
@@ -98,7 +98,7 @@ Keep in mind that substitution, especially from parameters in the `.local.tp` fi
 
 If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined as "~~NAME~~".  This will expand correctly into the value of `:NAME`.  There will be two expansions: `~~SYSTEM~~` into `~~NAME~~`, followed by `~~NAME~~` into the value of `:NAME` in the invocation.
 
-`:DEFAULT-ACTION` however is define as :COPY.  `:DEFAULT-ACTION` is never expanded - it is an internal symbol only, used to configure the expansion engine.
+`:DEFAULT-ACTION` however is defined as :COPY.  `:DEFAULT-ACTION` is never expanded - it is an internal symbol only, used to configure the expansion engine.
 
 ### Reserved Symbols
 
