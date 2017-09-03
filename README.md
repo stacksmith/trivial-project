@@ -1,4 +1,4 @@
-<MARK>Please use the :DEPENDS-ON () option or fix your .asd template to match this repo!</MARK>
+<span style="color:blue">Please use the :DEPENDS-ON () option or fix your .asd template to match this repo!</span>
 # TRIVIAL-PROJECT
 
 A simple tool for creating new 'projects' populated with files.
