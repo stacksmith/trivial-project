@@ -35,7 +35,7 @@ After setting your name/email address and preferred license in .local.tp file, y
 
 Fine tune your template to fit your needs.  Feel free to create different templates for different types of projects; specify the one you need with `:TEMPLATE-PATH` when creating projects.  
 
-Create your own key names (just insert ~~KEYNAME~~ in the text).  Of course, you must either pass the value by hand in `(make-project :NAME xxx :KEYNAME val...)`, or set a useful default in the .local.tp file (or both!).  Same goes for file renaming, with `TP_KEYNAME_TP` syntax in the filename.  If you don't like the ~~xx~~ syntax, change it with `:REGEX-NORMAL`...
+Create your own key names (just insert `~~KEYNAME~~` in the text).  Of course, you must either pass the value by hand in `(make-project :NAME xxx :KEYNAME val...)`, or set a useful default in the .local.tp file (or both!).  Same goes for file renaming, with `TP_KEYNAME_TP` syntax in the filename.  If you don't like the ~~xx~~ syntax, change it with `:REGEX-NORMAL`...
 
 Almost every aspect of project generation is configurable.  The rest of this document describes the aspects of configuration.
 
@@ -123,7 +123,7 @@ TRIVIAL-PROJECT uses regex substitution extensively, so it operates on strings a
 
 `:DEFAULT-ACTION` resolves to a symbol and is not expnadable. `:TEMPATE-PATH`, `:OUTPUT-PATH` are used by the system and are not useful (there are better ways to portably get the project path for instance).
 
-Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to internally map file types and names to actions.  Therefore symbols ~~EXTENSIONS~~ and ~~MANIFEST~~ should never be used inside text (or at least I cannot think of why you would want to introspect on TRIVIAL-PROJECT itself)
+Other internal symbols are `:EXTENSIONS` and `:MANIFEST`, which are used to internally map file types and names to actions.  Therefore symbols `~~EXTENSIONS~~` and `~~MANIFEST~~` should never be used inside text (or at least I cannot think of why you would want to introspect on TRIVIAL-PROJECT itself)
 
 ### File Renaming
 
