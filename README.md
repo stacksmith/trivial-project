@@ -1,5 +1,5 @@
 ```diff
--quicklisp users: bug :DEPENDS-ON default is not set in the quicklisp distro.
+- quicklisp users: bug :DEPENDS-ON default is not set in the quicklisp distro.
 - Please edit the generated .asd file, or to really fix it, edit the TP-SYSTEM-TP.asd template file and make it look like this
 +  :depends-on (~~DEPENDS-ON~~)
 ```
@@ -101,7 +101,7 @@ Keep in mind that substitution, especially from parameters in the `.local.tp` fi
 
 2. Expansion: cl-ppcre expands _strings_; so any expansion-bound values _must_ be strings.  This process takes place _after_ all keywords have been parsed in; therefore any values may include any other keywords (keeping in mind the circularity problem).
 
-If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined as "~~NAME~~".  This will expand correctly into the value of `:NAME`.  There will be two expansions: `~~SYSTEM~~` into `~~NAME~~`, followed by `~~NAME~~` into the value of `:NAME` in the invocation.
+If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined as `"~~NAME~~"`.  This will expand correctly into the value of `:NAME`.  There will be two expansions: `~~SYSTEM~~` into `~~NAME~~`, followed by `~~NAME~~` into the value of `:NAME` in the invocation.
 
 `:DEFAULT-ACTION` however is defined as :COPY.  `:DEFAULT-ACTION` is never expanded - it is an internal symbol only, used to configure the expansion engine.
 
