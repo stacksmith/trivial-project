@@ -1,5 +1,5 @@
 ```diff
--quicklisp users: Please use the :DEPENDS-ON () option (default is bad), fix your .asd template to match this repo!
+-quicklisp users: Please use the :DEPENDS-ON () option (default is bad) or fix your .asd template to match this repo!
 ```
 # TRIVIAL-PROJECT
 
