@@ -77,7 +77,7 @@ The :NAME key is required.  The other keys used in the default template are:
 `:EXTENSIONS`    | see below | list of extensions and actions
 `:MANIFEST` | | optional highest-priority list of files and actions
 `:TEMPLATE-PATH` | "~/trivial-project-template/" | pathname of template
-`:OUTPUT-PATH` | your local project directory | directory that will contain new project
+`:OUTPUT-PATH` | quicklisp project directory | directory that will contain new project
 `:TP-LOCAL-CONFIG-FILENAME` | ".local.tp" | Configuration filename 
 `:TP-REGISTER-WITH-ASDF` | T | when T register project path with asdf:*central-registry*
 
