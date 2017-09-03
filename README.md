@@ -117,6 +117,19 @@ As mentioned before, the (default but changeable) syntax for keys in filenames t
 
 As an example, the stock template has a file named `TP_SYSTEM_TP.asd`.  It will expand to `~~NAME~~.asd` and finally to the value of `:NAME` with extension .asd, unless `:SYSTEM` has been explicitly set. 
 
+### Why are some things quoted and others not?
+
+TRIVIAL-PROJECT uses regex substitution extensively, so it operates on strings and not lisp symbols.  However, consider that:
+
+- With a couple of exceptions, the parameter values are used to expand `~~variables~~`, so they must be strings.
+
+- configuration files (local and global) are _read_ in, and are Lisp code.  Quote marks are required for parameter values that are strings.
+
+- template files are text files which are copied and expanded.  Quote marks are not required, unless you literally want them in the output (which you often do!)
+
+
+
+
 ### Multipass Renaming
 
 Each string, be it a filename or the contents of a file, is subject to multipass renaming.  It will continue to be processed until no keys are found in the file.  
