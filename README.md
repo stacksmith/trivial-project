@@ -1,4 +1,6 @@
-<span style="color:blue">Please use the :DEPENDS-ON () option or fix your .asd template to match this repo!</span>
+```diff
+-quicklisp users: Please use the :DEPENDS-ON () option (default is bad), fix your .asd template to match this repo!
+```
 # TRIVIAL-PROJECT
 
 A simple tool for creating new 'projects' populated with files.
