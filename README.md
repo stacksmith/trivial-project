@@ -105,6 +105,20 @@ If you examine the stock `.local.tp` file you will see that `:SYSTEM` is defined
 
 `:DEFAULT-ACTION` however is defined as :COPY.  `:DEFAULT-ACTION` is never expanded - it is an internal symbol only, used to configure the expansion engine.
 
+### Why are some things quoted and others not?
+
+TRIVIAL-PROJECT uses regex substitution extensively, so it operates on strings and not lisp symbols.  However, consider that:
+
+- With a couple of exceptions, the parameter values are used to expand `~~variables~~`, so they must be strings.
+
+- configuration files (local and global) are _read_ in, and are Lisp code.  Quote marks are required for parameter values that are strings.
+
+- template files are text files which are copied and expanded.  Quote marks are not required, unless you literally want them in the output (which you often do!)
+
+- The expander does not care whether the text being scanned has quotes or not - any time it sees `~~something~~` - in quotes or not - it will try to substitute a value string.  That value must come from the `make-project ... :something "should-be-this"`, or a default from local or global configuration file.
+
+- Finally, the value string may contain, as a substring `~~other-variables~~`, in which case the expansion will continue.  This makes for an extremely flexible system.
+
 ### Reserved Symbols
 
 `:DEFAULT-ACTION` resolves to a symbol and is not expnadable. `:TEMPATE-PATH`, `:OUTPUT-PATH` are used by the system and are not useful (there are better ways to portably get the project path for instance).
@@ -117,17 +131,6 @@ As mentioned before, the (default but changeable) syntax for keys in filenames t
 
 As an example, the stock template has a file named `TP_SYSTEM_TP.asd`.  It will expand to `~~NAME~~.asd` and finally to the value of `:NAME` with extension .asd, unless `:SYSTEM` has been explicitly set. 
 
-### Why are some things quoted and others not?
-
-TRIVIAL-PROJECT uses regex substitution extensively, so it operates on strings and not lisp symbols.  However, consider that:
-
-- With a couple of exceptions, the parameter values are used to expand `~~variables~~`, so they must be strings.
-
-- configuration files (local and global) are _read_ in, and are Lisp code.  Quote marks are required for parameter values that are strings.
-
-- template files are text files which are copied and expanded.  Quote marks are not required, unless you literally want them in the output (which you often do!)
-
-- The expander does not care whether the text being scanned has quotes or not - any time it sees `~~something~~` - in quotes or not - it will try to substitute value that, hopefully, is defined somewhere else as a string.
 
 
 
