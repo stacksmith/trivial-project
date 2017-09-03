@@ -1,6 +1,6 @@
 ```diff
 -quicklisp users: bug :DEPENDS-ON default is not set in the quicklisp distro.
-- Please edit the generated .asd file.  To fix it, edit the TP-SYSTEM-TP.asd template file and make it look like this
+- Please edit the generated .asd file, or to really fix it, edit the TP-SYSTEM-TP.asd template file and make it look like this
 +  :depends-on (~~DEPENDS-ON~~)
 ```
 # TRIVIAL-PROJECT
