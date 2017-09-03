@@ -63,7 +63,7 @@ The manifest is a list of files and file actions.  Files are strings containing 
 The :NAME key is required.  The other keys used in the default template are:
 
  KEY | DEFAULT | COMMENT
- ~~- | ~~~~~~- | ~~~~~~-
+ --- | ------- | -------
 `:NAME` | | !!! Required; Name of directory of new project
 `:SYSTEM` | value of `:NAME` | asdf system name
 `:PACKAGE` | value of `:NAME` | package name
