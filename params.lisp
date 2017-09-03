@@ -118,8 +118,9 @@ template directory called \"~A\"~%~%You can start with a copy of the default tem
 ;; Figure out action for a file by its extension
 ;;
 (defun filename-action (enoughpath)
+  
   (or
-   (and (char= #\. (char (pathname-name enoughpath) 0))
+   (and (string= ".local.tp" enoughpath) 
 	:ignore)
    ;; Is the file specified explicitly?
    (gethash enoughpath *files*)

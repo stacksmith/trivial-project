@@ -5,7 +5,7 @@
   :author "~~AUTHOR~~"
   :license "~~LICENSE~~"
   :serial t
-  :depends-on ~~DEPENDS-ON~~
+  :depends-on (~~DEPENDS-ON~~)
   :components ((:file "package")
 	       (:file "~~SYSTEM~~")))
 
