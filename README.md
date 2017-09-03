@@ -127,6 +127,9 @@ TRIVIAL-PROJECT uses regex substitution extensively, so it operates on strings a
 
 - template files are text files which are copied and expanded.  Quote marks are not required, unless you literally want them in the output (which you often do!)
 
+- The expander does not care whether the text being scanned has quotes or not - any time it sees `~~something~~` - in quotes or not - it will try to substitute value that, hopefully, is defined somewhere else as a string.
+
+
 
 
 
